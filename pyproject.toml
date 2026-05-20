@@ -1,0 +1,14 @@
+[project]
+name = "crypto-trader"
+version = "0.1.0"
+description = "Safe crypto market/news monitor and paper-trading foundation"
+requires-python = ">=3.10"
+dependencies = []
+
+[project.scripts]
+crypto-monitor = "crypto_trader.collector:main"
+crypto-dashboard = "crypto_trader.dashboard:main"
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
