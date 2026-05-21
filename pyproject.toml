@@ -8,6 +8,7 @@ dependencies = []
 [project.scripts]
 crypto-monitor = "crypto_trader.collector:main"
 crypto-dashboard = "crypto_trader.dashboard:main"
+crypto-scan = "crypto_trader.scan:main"
 
 [tool.pytest.ini_options]
 pythonpath = ["src"]

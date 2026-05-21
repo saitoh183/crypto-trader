@@ -53,6 +53,31 @@ CREATE TABLE IF NOT EXISTS run_summaries (
     market_bias TEXT NOT NULL,
     summary TEXT NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS trade_signals (
+    generated_at_utc TEXT NOT NULL,
+    symbol TEXT NOT NULL,
+    interval TEXT NOT NULL,
+    action TEXT NOT NULL,
+    confidence REAL NOT NULL,
+    price REAL NOT NULL,
+    reason TEXT NOT NULL,
+    inputs_json TEXT NOT NULL,
+    PRIMARY KEY (generated_at_utc, symbol, interval)
+);
+
+CREATE TABLE IF NOT EXISTS paper_orders (
+    generated_at_utc TEXT NOT NULL,
+    symbol TEXT NOT NULL,
+    side TEXT NOT NULL,
+    quantity REAL NOT NULL,
+    price REAL NOT NULL,
+    notional_usdt REAL NOT NULL,
+    fee_usdt REAL NOT NULL,
+    status TEXT NOT NULL,
+    reason TEXT NOT NULL,
+    PRIMARY KEY (generated_at_utc, symbol, side)
+);
 """
 
 

@@ -12,6 +12,16 @@ Goal: build a safe crypto trading assistant with paper trading first, full obser
 - Portfolio tracking: manual holdings later, not required for the first build
 - Discord crypto channel: `1506657476827811993`
 
+## Scan command
+
+Generate the NovaAI-ready paper-trading decision payload:
+
+```bash
+PYTHONPATH=src python -m crypto_trader.scan --json
+```
+
+This reads the latest stored 15m candles, generates BUY/SELL/HOLD signals, applies conservative risk checks, and simulates paper orders only when risk allows. There is no live exchange order path.
+
 ## Current stance
 
 This project starts in **research + paper trading mode**. No real funds. No exchange API trading permissions until the strategy, dashboard, logs, and risk controls are proven.
