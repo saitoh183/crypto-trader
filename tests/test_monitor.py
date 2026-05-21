@@ -6,7 +6,17 @@ def test_schema_initializes(tmp_path):
     conn = connect(tmp_path / "test.sqlite3")
     init_db(conn)
     tables = {row[0] for row in conn.execute("SELECT name FROM sqlite_master WHERE type='table'")}
-    assert {"candles", "market_snapshots", "news_items", "run_summaries", "trade_signals", "paper_orders"}.issubset(tables)
+    assert {
+        "candles",
+        "market_snapshots",
+        "news_items",
+        "run_summaries",
+        "trade_signals",
+        "paper_orders",
+        "paper_account",
+        "paper_positions",
+        "paper_settings",
+    }.issubset(tables)
 
 
 def test_rsi_returns_value_for_moving_series():

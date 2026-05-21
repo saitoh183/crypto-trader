@@ -37,18 +37,22 @@ def evaluate_risk(signal: TradeSignal, settings: Settings, state: RiskState) -> 
     max_daily_loss = state.equity_usdt * settings.max_daily_loss_pct / 100
     reasons: list[str] = []
 
-    if signal.action != "BUY":
-        reasons.append(f"signal action is {signal.action}; no new buy allowed")
+    if signal.action not in {"BUY", "SELL"}:
+        reasons.append(f"signal action is {signal.action}; no paper order allowed")
     if state.kill_switch:
         reasons.append("kill switch is enabled")
-    if state.daily_loss_usdt >= max_daily_loss:
-        reasons.append("daily loss limit reached")
-    if state.open_positions >= settings.max_open_positions:
-        reasons.append("maximum open positions reached")
     if state.trades_today >= settings.max_trades_per_day:
         reasons.append("maximum trades per day reached")
-    if signal.confidence < 0.6:
-        reasons.append("signal confidence below conservative threshold")
+
+    if signal.action == "BUY":
+        if state.daily_loss_usdt >= max_daily_loss:
+            reasons.append("daily loss limit reached")
+        if state.open_positions >= settings.max_open_positions:
+            reasons.append("maximum open positions reached")
+        if signal.confidence < 0.6:
+            reasons.append("signal confidence below conservative threshold")
+    elif signal.action == "SELL" and signal.confidence < 0.5:
+        reasons.append("sell signal confidence below conservative threshold")
 
     allowed = not reasons
     if allowed:

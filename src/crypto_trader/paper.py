@@ -12,6 +12,10 @@ class PaperPosition:
     entry_price: float
     cost_basis_usdt: float
 
+    def market_value_usdt(self, price: float | None = None) -> float:
+        mark_price = self.entry_price if price is None or price <= 0 else price
+        return self.quantity * mark_price
+
     def as_dict(self) -> dict[str, float | str]:
         return {
             "symbol": self.symbol,
@@ -26,6 +30,11 @@ class PaperAccount:
     cash_usdt: float
     positions: dict[str, PaperPosition] = field(default_factory=dict)
 
+    def equity_usdt(self, prices: dict[str, float] | None = None) -> float:
+        prices = prices or {}
+        positions_value = sum(position.market_value_usdt(prices.get(symbol)) for symbol, position in self.positions.items())
+        return round(self.cash_usdt + positions_value, 8)
+
 
 @dataclass(frozen=True)
 class PaperOrder:
@@ -37,6 +46,7 @@ class PaperOrder:
     fee_usdt: float
     status: str
     reason: str
+    realized_pnl_usdt: float = 0.0
 
     def as_dict(self) -> dict[str, float | str]:
         return {
@@ -48,16 +58,44 @@ class PaperOrder:
             "fee_usdt": self.fee_usdt,
             "status": self.status,
             "reason": self.reason,
+            "realized_pnl_usdt": self.realized_pnl_usdt,
         }
 
 
-def execute_paper_order(account: PaperAccount, signal: TradeSignal, position_size_usdt: float, fee_rate: float = 0.001) -> PaperOrder:
-    if signal.action != "BUY":
-        return PaperOrder(signal.symbol, signal.action, 0.0, signal.price, 0.0, 0.0, "SKIPPED", "signal is not BUY")
+def execute_paper_order(
+    account: PaperAccount,
+    signal: TradeSignal,
+    position_size_usdt: float,
+    fee_rate: float = 0.001,
+) -> PaperOrder:
     if signal.price <= 0:
-        return PaperOrder(signal.symbol, "BUY", 0.0, signal.price, 0.0, 0.0, "REJECTED", "invalid signal price")
+        return PaperOrder(signal.symbol, signal.action, 0.0, signal.price, 0.0, 0.0, "REJECTED", "invalid signal price")
 
-    notional = min(position_size_usdt, account.cash_usdt)
+    if signal.action == "SELL":
+        return _execute_paper_sell(account, signal, fee_rate)
+    if signal.action != "BUY":
+        return PaperOrder(signal.symbol, signal.action, 0.0, signal.price, 0.0, 0.0, "SKIPPED", "signal is not BUY or SELL")
+
+    return _execute_paper_buy(account, signal, position_size_usdt, fee_rate)
+
+
+def _execute_paper_buy(account: PaperAccount, signal: TradeSignal, position_size_usdt: float, fee_rate: float) -> PaperOrder:
+    existing = account.positions.get(signal.symbol)
+    existing_cost = existing.cost_basis_usdt if existing else 0.0
+    remaining_position_capacity = round(position_size_usdt - existing_cost, 8)
+    if remaining_position_capacity <= 0:
+        return PaperOrder(
+            signal.symbol,
+            "BUY",
+            0.0,
+            signal.price,
+            0.0,
+            0.0,
+            "REJECTED",
+            "paper position size limit reached",
+        )
+
+    notional = min(remaining_position_capacity, account.cash_usdt)
     fee = round(notional * fee_rate, 8)
     total = notional + fee
     if total > account.cash_usdt:
@@ -69,7 +107,6 @@ def execute_paper_order(account: PaperAccount, signal: TradeSignal, position_siz
 
     quantity = notional / signal.price
     account.cash_usdt = round(account.cash_usdt - total, 8)
-    existing = account.positions.get(signal.symbol)
     if existing:
         combined_quantity = existing.quantity + quantity
         combined_cost = existing.cost_basis_usdt + notional
@@ -80,3 +117,30 @@ def execute_paper_order(account: PaperAccount, signal: TradeSignal, position_siz
         account.positions[signal.symbol] = PaperPosition(signal.symbol, quantity, signal.price, notional)
 
     return PaperOrder(signal.symbol, "BUY", quantity, signal.price, notional, fee, "FILLED", "paper buy executed")
+
+
+def _execute_paper_sell(account: PaperAccount, signal: TradeSignal, fee_rate: float) -> PaperOrder:
+    position = account.positions.get(signal.symbol)
+    if position is None or position.quantity <= 0:
+        return PaperOrder(signal.symbol, "SELL", 0.0, signal.price, 0.0, 0.0, "SKIPPED", "no open paper position")
+
+    quantity = position.quantity
+    gross_notional = quantity * signal.price
+    fee = round(gross_notional * fee_rate, 8)
+    net_proceeds = gross_notional - fee
+    realized_pnl = round(net_proceeds - position.cost_basis_usdt, 8)
+
+    account.cash_usdt = round(account.cash_usdt + net_proceeds, 8)
+    del account.positions[signal.symbol]
+
+    return PaperOrder(
+        signal.symbol,
+        "SELL",
+        quantity,
+        signal.price,
+        gross_notional,
+        fee,
+        "FILLED",
+        "paper sell executed; position closed",
+        realized_pnl,
+    )

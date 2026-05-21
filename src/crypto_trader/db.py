@@ -76,7 +76,28 @@ CREATE TABLE IF NOT EXISTS paper_orders (
     fee_usdt REAL NOT NULL,
     status TEXT NOT NULL,
     reason TEXT NOT NULL,
+    realized_pnl_usdt REAL NOT NULL DEFAULT 0,
     PRIMARY KEY (generated_at_utc, symbol, side)
+);
+
+CREATE TABLE IF NOT EXISTS paper_account (
+    account_id TEXT PRIMARY KEY,
+    cash_usdt REAL NOT NULL,
+    updated_at_utc TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS paper_positions (
+    symbol TEXT PRIMARY KEY,
+    quantity REAL NOT NULL,
+    entry_price REAL NOT NULL,
+    cost_basis_usdt REAL NOT NULL,
+    updated_at_utc TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS paper_settings (
+    key TEXT PRIMARY KEY,
+    value TEXT NOT NULL,
+    updated_at_utc TEXT NOT NULL
 );
 """
 
@@ -89,6 +110,17 @@ def connect(database_path: Path) -> sqlite3.Connection:
     return conn
 
 
+def _column_names(conn: sqlite3.Connection, table: str) -> set[str]:
+    return {row["name"] for row in conn.execute(f"PRAGMA table_info({table})")}
+
+
+def _run_migrations(conn: sqlite3.Connection) -> None:
+    paper_order_columns = _column_names(conn, "paper_orders")
+    if "realized_pnl_usdt" not in paper_order_columns:
+        conn.execute("ALTER TABLE paper_orders ADD COLUMN realized_pnl_usdt REAL NOT NULL DEFAULT 0")
+
+
 def init_db(conn: sqlite3.Connection) -> None:
     conn.executescript(SCHEMA)
+    _run_migrations(conn)
     conn.commit()
