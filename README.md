@@ -2,6 +2,16 @@
 
 Goal: build a safe crypto trading assistant with paper trading first, full observability, and manual approval before any live trade.
 
+## Current configuration
+
+- Watchlist: BTC/USDT, ETH/USDT, SOL/USDT, XRP/USDT, DOGE/USDT
+- Quote currency: USDT for trading logic; CAD can be added later as a display/reporting layer
+- Paper balance: 1000 USDT
+- Risk profile: conservative
+- Scan interval: 15m
+- Portfolio tracking: manual holdings later, not required for the first build
+- Discord crypto channel: `1506657476827811993`
+
 ## Current stance
 
 This project starts in **research + paper trading mode**. No real funds. No exchange API trading permissions until the strategy, dashboard, logs, and risk controls are proven.

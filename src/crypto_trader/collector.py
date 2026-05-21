@@ -18,6 +18,7 @@ from typing import Iterable
 
 from .config import Settings, get_settings
 from .db import connect, init_db
+from .indicators import rsi as indicator_rsi
 
 BINANCE_KLINES_URL = "https://api.binance.com/api/v3/klines"
 NEWS_FEEDS = {
@@ -114,21 +115,7 @@ def pct_change(current: float, previous: float) -> float | None:
 
 
 def calculate_rsi(closes: list[float], period: int = 14) -> float | None:
-    if len(closes) <= period:
-        return None
-    gains: list[float] = []
-    losses: list[float] = []
-    recent = closes[-(period + 1) :]
-    for previous, current in zip(recent, recent[1:]):
-        delta = current - previous
-        gains.append(max(delta, 0))
-        losses.append(abs(min(delta, 0)))
-    average_gain = mean(gains)
-    average_loss = mean(losses)
-    if average_loss == 0:
-        return 100.0
-    rs = average_gain / average_loss
-    return 100 - (100 / (1 + rs))
+    return indicator_rsi(closes, period)
 
 
 def analyse_candles(symbol: str, candles: list[Candle]) -> MarketSnapshot:
