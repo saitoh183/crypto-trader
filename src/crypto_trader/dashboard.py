@@ -44,13 +44,47 @@ def load_dashboard_data() -> dict[str, object]:
         LIMIT 40
         """
     ).fetchall()
+    signals = conn.execute(
+        """
+        SELECT generated_at_utc, symbol, interval, action, confidence, price, reason
+        FROM trade_signals
+        ORDER BY generated_at_utc DESC
+        LIMIT 25
+        """
+    ).fetchall()
+    orders = conn.execute(
+        """
+        SELECT generated_at_utc, symbol, side, quantity, price, notional_usdt,
+               fee_usdt, status, reason, realized_pnl_usdt
+        FROM paper_orders
+        ORDER BY generated_at_utc DESC
+        LIMIT 25
+        """
+    ).fetchall()
+    positions = conn.execute(
+        "SELECT symbol, quantity, entry_price, cost_basis_usdt FROM paper_positions ORDER BY symbol"
+    ).fetchall()
+    account_row = conn.execute(
+        "SELECT cash_usdt, updated_at_utc FROM paper_account WHERE account_id = 'default'"
+    ).fetchone()
     conn.close()
 
     return {
         "latest": dict(latest) if latest else None,
         "snapshots": [dict(row) for row in snapshots],
         "news": [dict(row) for row in news],
+        "signals": [dict(row) for row in signals],
+        "orders": [dict(row) for row in orders],
+        "positions": [dict(row) for row in positions],
+        "account": dict(account_row) if account_row else None,
     }
+
+
+def fmt_pnl(value: float | None) -> str:
+    if value is None:
+        return "n/a"
+    sign = "+" if value >= 0 else ""
+    return f"{sign}{value:,.2f}"
 
 
 def render_dashboard() -> str:
@@ -58,6 +92,10 @@ def render_dashboard() -> str:
     latest = data["latest"]
     snapshots = data["snapshots"]
     news = data["news"]
+    signals = data["signals"]
+    orders = data["orders"]
+    positions = data["positions"]
+    account = data["account"]
     generated = datetime.now(UTC).replace(microsecond=0).isoformat().replace("+00:00", "Z")
 
     latest_html = "<p>No collection run yet.</p>"
@@ -98,6 +136,67 @@ def render_dashboard() -> str:
         for row in news
     ) or "<tr><td colspan='4'>No news yet.</td></tr>"
 
+    # Paper account summary card
+    if account:
+        cash = float(account["cash_usdt"])
+        cost_basis_total = sum(float(p["cost_basis_usdt"]) for p in positions)
+        account_html = f"""
+        <div class="card">
+          <div class="label">Paper account · paper trading only</div>
+          <div style="display:flex;gap:32px;margin-top:10px;flex-wrap:wrap;">
+            <div><div class="label">Cash</div><div class="big">{fmt_num(cash)} USDT</div></div>
+            <div><div class="label">Positions (cost basis)</div><div class="big">{fmt_num(cost_basis_total)} USDT</div></div>
+            <div><div class="label">Last updated</div><div class="big" style="font-size:16px">{html.escape(account['updated_at_utc'])}</div></div>
+          </div>
+        </div>
+        """
+    else:
+        account_html = ""
+
+    # Open paper positions table
+    position_rows = "".join(
+        f"""
+        <tr>
+          <td>{html.escape(p['symbol'])}</td>
+          <td>{fmt_num(p['quantity'])}</td>
+          <td>{fmt_num(p['entry_price'])}</td>
+          <td>{fmt_num(p['cost_basis_usdt'])}</td>
+        </tr>
+        """
+        for p in positions
+    ) or "<tr><td colspan='4'>No open positions.</td></tr>"
+
+    # Latest trade signals table
+    signal_rows = "".join(
+        f"""
+        <tr>
+          <td>{html.escape(row['generated_at_utc'])}</td>
+          <td>{html.escape(row['symbol'])}</td>
+          <td><strong>{html.escape(row['action'])}</strong></td>
+          <td>{fmt_num(row['confidence'])}</td>
+          <td>{fmt_num(row['price'])}</td>
+          <td class="muted">{html.escape(row['reason'])}</td>
+        </tr>
+        """
+        for row in signals
+    ) or "<tr><td colspan='6'>No signals yet.</td></tr>"
+
+    # Recent paper orders table
+    order_rows = "".join(
+        f"""
+        <tr>
+          <td>{html.escape(row['generated_at_utc'])}</td>
+          <td>{html.escape(row['symbol'])}</td>
+          <td>{html.escape(row['side'])}</td>
+          <td>{html.escape(row['status'])}</td>
+          <td>{fmt_num(row['notional_usdt'])}</td>
+          <td>{fmt_pnl(row['realized_pnl_usdt'])}</td>
+          <td class="muted">{html.escape(row['reason'])}</td>
+        </tr>
+        """
+        for row in orders
+    ) or "<tr><td colspan='7'>No paper orders yet.</td></tr>"
+
     return f"""<!doctype html>
 <html lang="en">
 <head>
@@ -128,6 +227,28 @@ def render_dashboard() -> str:
   </header>
   <main>
     {latest_html}
+    {account_html}
+    <section>
+      <h2 class="section-title">Open paper positions</h2>
+      <table>
+        <thead><tr><th>Symbol</th><th>Quantity</th><th>Entry price</th><th>Cost basis (USDT)</th></tr></thead>
+        <tbody>{position_rows}</tbody>
+      </table>
+    </section>
+    <section>
+      <h2 class="section-title">Latest paper signals (last 25)</h2>
+      <table>
+        <thead><tr><th>Time (UTC)</th><th>Symbol</th><th>Action</th><th>Confidence</th><th>Price</th><th>Reason</th></tr></thead>
+        <tbody>{signal_rows}</tbody>
+      </table>
+    </section>
+    <section>
+      <h2 class="section-title">Recent paper orders (last 25)</h2>
+      <table>
+        <thead><tr><th>Time (UTC)</th><th>Symbol</th><th>Side</th><th>Status</th><th>Notional (USDT)</th><th>P&amp;L (USDT)</th><th>Reason</th></tr></thead>
+        <tbody>{order_rows}</tbody>
+      </table>
+    </section>
     <section>
       <h2 class="section-title">Market snapshots</h2>
       <table>
