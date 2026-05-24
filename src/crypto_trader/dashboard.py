@@ -6,6 +6,7 @@ import json
 from datetime import UTC, datetime
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
+from typing import Any, cast
 
 from .config import get_settings
 from .db import connect, init_db
@@ -67,6 +68,23 @@ def load_dashboard_data() -> dict[str, object]:
     account_row = conn.execute(
         "SELECT cash_usdt, updated_at_utc FROM paper_account WHERE account_id = 'default'"
     ).fetchone()
+    signal_stats = conn.execute(
+        """
+        SELECT action, COUNT(*) AS count
+        FROM trade_signals
+        GROUP BY action
+        """
+    ).fetchall()
+    order_stats = conn.execute(
+        """
+        SELECT status, side, COUNT(*) AS count,
+               COALESCE(SUM(notional_usdt), 0) AS notional_usdt,
+               COALESCE(SUM(realized_pnl_usdt), 0) AS realized_pnl_usdt
+        FROM paper_orders
+        GROUP BY status, side
+        """
+    ).fetchall()
+    kill_switch_row = conn.execute("SELECT value FROM paper_settings WHERE key = 'kill_switch'").fetchone()
     conn.close()
 
     return {
@@ -77,6 +95,9 @@ def load_dashboard_data() -> dict[str, object]:
         "orders": [dict(row) for row in orders],
         "positions": [dict(row) for row in positions],
         "account": dict(account_row) if account_row else None,
+        "signal_stats": [dict(row) for row in signal_stats],
+        "order_stats": [dict(row) for row in order_stats],
+        "kill_switch": bool(kill_switch_row and kill_switch_row["value"].strip().lower() in {"1", "true", "yes", "on"}),
     }
 
 
@@ -96,6 +117,10 @@ def render_dashboard() -> str:
     orders = data["orders"]
     positions = data["positions"]
     account = data["account"]
+    signal_stats_rows = cast(list[dict[str, Any]], data["signal_stats"])
+    order_stats = cast(list[dict[str, Any]], data["order_stats"])
+    signal_stats = {row["action"]: row["count"] for row in signal_stats_rows}
+    kill_switch = bool(data["kill_switch"])
     generated = datetime.now(UTC).replace(microsecond=0).isoformat().replace("+00:00", "Z")
 
     latest_html = "<p>No collection run yet.</p>"
@@ -152,6 +177,24 @@ def render_dashboard() -> str:
         """
     else:
         account_html = ""
+
+    filled_orders = sum(int(row["count"]) for row in order_stats if row["status"] == "FILLED")
+    rejected_orders = sum(int(row["count"]) for row in order_stats if row["status"] == "REJECTED")
+    skipped_orders = sum(int(row["count"]) for row in order_stats if row["status"] == "SKIPPED")
+    realized_pnl = sum(float(row["realized_pnl_usdt"]) for row in order_stats)
+    safety_html = f"""
+    <div class="card">
+      <div class="label">Trading readiness / safety</div>
+      <div class="status-grid">
+        <div><div class="label">Mode</div><div class="big">Paper only</div></div>
+        <div><div class="label">Kill switch</div><div class="big {'danger' if kill_switch else 'ok'}">{'ON' if kill_switch else 'OFF'}</div></div>
+        <div><div class="label">Signals</div><div class="big">B {int(signal_stats.get('BUY', 0))} / S {int(signal_stats.get('SELL', 0))} / H {int(signal_stats.get('HOLD', 0))}</div></div>
+        <div><div class="label">Orders</div><div class="big">{filled_orders} filled · {rejected_orders} rejected · {skipped_orders} skipped</div></div>
+        <div><div class="label">Realized paper P&amp;L</div><div class="big {'ok' if realized_pnl >= 0 else 'danger'}">{fmt_pnl(realized_pnl)} USDT</div></div>
+      </div>
+      <p class="muted">Live execution remains disabled until backtesting, risk gates, kill switch, approval records, exchange key checks, and your explicit live approval are all in place.</p>
+    </div>
+    """
 
     # Open paper positions table
     position_rows = "".join(
@@ -212,6 +255,9 @@ def render_dashboard() -> str:
     .card {{ background: #121a33; border: 1px solid #26345f; border-radius: 14px; padding: 18px; box-shadow: 0 8px 24px rgba(0,0,0,.25); }}
     .label {{ color: #9fb0d0; text-transform: uppercase; letter-spacing: .08em; font-size: 12px; }}
     .big {{ font-size: 28px; font-weight: 700; margin: 8px 0 14px; }}
+    .status-grid {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 18px; margin-top: 10px; }}
+    .ok {{ color: #7ee787; }}
+    .danger {{ color: #ff7b72; }}
     pre {{ white-space: pre-wrap; color: #cbd7f4; margin: 0; }}
     table {{ width: 100%; border-collapse: collapse; background: #121a33; border-radius: 14px; overflow: hidden; }}
     th, td {{ padding: 11px 12px; border-bottom: 1px solid #26345f; text-align: left; vertical-align: top; }}
@@ -228,6 +274,7 @@ def render_dashboard() -> str:
   <main>
     {latest_html}
     {account_html}
+    {safety_html}
     <section>
       <h2 class="section-title">Open paper positions</h2>
       <table>

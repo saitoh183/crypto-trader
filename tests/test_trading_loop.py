@@ -1,6 +1,7 @@
 import json
 from typing import Any, cast
 
+from crypto_trader.backtest import build_backtest_result, run_symbol_backtest
 from crypto_trader.collector import Candle, upsert_candles
 from crypto_trader.config import Settings
 from crypto_trader.db import connect, init_db
@@ -193,3 +194,39 @@ def test_scan_result_handles_empty_candle_history(tmp_path):
     assert result["decisions"][0]["signal"]["action"] == "HOLD"
     assert result["decisions"][0]["risk"]["allowed"] is False
     assert result["paper_account"]["cash_usdt"] == 1000.0
+
+
+def test_backtest_replays_strategy_without_mutating_paper_tables(tmp_path):
+    db_path = tmp_path / "backtest.sqlite3"
+    conn = connect(db_path)
+    init_db(conn)
+    upsert_candles(conn, rising_candles("BTCUSDT", count=90))
+    conn.close()
+    settings = Settings(database_path=db_path, symbols=("BTCUSDT",), interval="15m")
+
+    result = cast(dict[str, Any], build_backtest_result(settings, limit=90))
+
+    conn = connect(db_path)
+    paper_order_count = conn.execute("SELECT COUNT(*) FROM paper_orders").fetchone()[0]
+    paper_position_count = conn.execute("SELECT COUNT(*) FROM paper_positions").fetchone()[0]
+    conn.close()
+
+    summary = result["summaries"][0]
+    assert result["mode"] == "backtest"
+    assert summary["symbol"] == "BTCUSDT"
+    assert summary["candles_used"] == 90
+    assert summary["signals"]["BUY"] > 0
+    assert summary["orders"]["FILLED"] >= 1
+    assert paper_order_count == 0
+    assert paper_position_count == 0
+    json.dumps(result)
+
+
+def test_backtest_handles_insufficient_history():
+    settings = Settings(symbols=("BTCUSDT",), interval="15m")
+
+    summary = run_symbol_backtest(rising_candles("BTCUSDT", count=20), settings, "BTCUSDT", "15m")
+
+    assert summary.candles_used == 20
+    assert summary.ending_equity_usdt == 1000.0
+    assert summary.signals == {"BUY": 0, "SELL": 0, "HOLD": 0}
