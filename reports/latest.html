@@ -27,7 +27,7 @@
 <body>
   <header>
     <h1>Crypto Market Monitor</h1>
-    <div class="muted">Generated 2026-09-08T14:00:28Z · centralized market/news view · paper/research mode</div>
+    <div class="muted">Generated 2026-09-08T15:00:28Z · centralized market/news view · paper/research mode</div>
   </header>
   <main>
     
@@ -35,20 +35,20 @@
           <div class="label">Market bias</div>
           <div class="big">mixed / wait for confirmation</div>
           <pre>Market bias: mixed / wait for confirmation
-BTCUSDT: mixed, 24h -0.52%, RSI 31.0, below_sma20, range_24h, rsi_neutral
-ETHUSDT: mixed, 24h -0.49%, RSI 31.4, below_sma20, range_24h, rsi_neutral
-SOLUSDT: mixed, 24h 0.05%, RSI 39.0, below_sma20, range_24h, rsi_neutral
-XRPUSDT: mixed, 24h 1.41%, RSI 54.8, above_sma20, range_24h, rsi_neutral
-DOGEUSDT: mixed, 24h 0.12%, RSI 36.9, below_sma20, range_24h, rsi_neutral</pre>
+BTCUSDT: mixed, 24h 0.09%, RSI 53.2, above_sma20, range_24h, rsi_neutral
+ETHUSDT: mixed, 24h 0.21%, RSI 57.4, above_sma20, range_24h, rsi_neutral
+SOLUSDT: mixed, 24h 0.16%, RSI 55.8, above_sma20, range_24h, rsi_neutral
+XRPUSDT: mixed, 24h 1.82%, RSI 67.1, above_sma20, range_24h, rsi_neutral
+DOGEUSDT: mixed, 24h 0.31%, RSI 50.5, above_sma20, range_24h, rsi_neutral</pre>
         </div>
         
     
         <div class="card">
           <div class="label">Paper account · paper trading only</div>
           <div style="display:flex;gap:32px;margin-top:10px;flex-wrap:wrap;">
-            <div><div class="label">Cash</div><div class="big">978.56 USDT</div></div>
-            <div><div class="label">Positions (cost basis)</div><div class="big">0.00 USDT</div></div>
-            <div><div class="label">Last updated</div><div class="big" style="font-size:16px">2026-09-08T14:00:00Z</div></div>
+            <div><div class="label">Cash</div><div class="big">929.58 USDT</div></div>
+            <div><div class="label">Positions (cost basis)</div><div class="big">48.93 USDT</div></div>
+            <div><div class="label">Last updated</div><div class="big" style="font-size:16px">2026-09-08T15:00:00Z</div></div>
           </div>
         </div>
         
@@ -58,8 +58,8 @@ DOGEUSDT: mixed, 24h 0.12%, RSI 36.9, below_sma20, range_24h, rsi_neutral</pre>
       <div class="status-grid">
         <div><div class="label">Mode</div><div class="big">Paper only</div></div>
         <div><div class="label">Kill switch</div><div class="big ok">OFF</div></div>
-        <div><div class="label">Signals</div><div class="big">B 917 / S 24967 / H 25801</div></div>
-        <div><div class="label">Orders</div><div class="big">438 filled · 222 rejected · 20299 skipped</div></div>
+        <div><div class="label">Signals</div><div class="big">B 921 / S 24983 / H 25801</div></div>
+        <div><div class="label">Orders</div><div class="big">439 filled · 225 rejected · 20315 skipped</div></div>
         <div><div class="label">Realized paper P&amp;L</div><div class="big danger">-11.00 USDT</div></div>
       </div>
       <p class="muted">Live execution remains disabled until backtesting, risk gates, kill switch, approval records, exchange key checks, and your explicit live approval are all in place.</p>
@@ -69,7 +69,14 @@ DOGEUSDT: mixed, 24h 0.12%, RSI 36.9, below_sma20, range_24h, rsi_neutral</pre>
       <h2 class="section-title">Open paper positions</h2>
       <table>
         <thead><tr><th>Symbol</th><th>Quantity</th><th>Entry price</th><th>Cost basis (USDT)</th></tr></thead>
-        <tbody><tr><td colspan='4'>No open positions.</td></tr></tbody>
+        <tbody>
+        <tr>
+          <td>XRPUSDT</td>
+          <td>34.80</td>
+          <td>1.41</td>
+          <td>48.93</td>
+        </tr>
+        </tbody>
       </table>
     </section>
     <section>
@@ -78,6 +85,186 @@ DOGEUSDT: mixed, 24h 0.12%, RSI 36.9, below_sma20, range_24h, rsi_neutral</pre>
         <thead><tr><th>Time (UTC)</th><th>Symbol</th><th>Action</th><th>Confidence</th><th>Price</th><th>Reason</th></tr></thead>
         <tbody>
         <tr>
+          <td>2026-09-08T15:00:00Z</td>
+          <td>XRPUSDT</td>
+          <td><strong>BUY</strong></td>
+          <td>0.75</td>
+          <td>1.41</td>
+          <td class="muted">price above EMA50 with EMA9 above EMA21; RSI acceptable; volume/MACD confirm</td>
+        </tr>
+        
+        <tr>
+          <td>2026-09-08T15:00:00Z</td>
+          <td>SOLUSDT</td>
+          <td><strong>SELL</strong></td>
+          <td>0.55</td>
+          <td>102.94</td>
+          <td class="muted">bearish trend or overheated RSI; exit/reduce exposure signal</td>
+        </tr>
+        
+        <tr>
+          <td>2026-09-08T15:00:00Z</td>
+          <td>ETHUSDT</td>
+          <td><strong>SELL</strong></td>
+          <td>0.55</td>
+          <td>2,471.02</td>
+          <td class="muted">bearish trend or overheated RSI; exit/reduce exposure signal</td>
+        </tr>
+        
+        <tr>
+          <td>2026-09-08T15:00:00Z</td>
+          <td>DOGEUSDT</td>
+          <td><strong>SELL</strong></td>
+          <td>0.55</td>
+          <td>0.09</td>
+          <td class="muted">bearish trend or overheated RSI; exit/reduce exposure signal</td>
+        </tr>
+        
+        <tr>
+          <td>2026-09-08T15:00:00Z</td>
+          <td>BTCUSDT</td>
+          <td><strong>SELL</strong></td>
+          <td>0.55</td>
+          <td>78,156.71</td>
+          <td class="muted">bearish trend or overheated RSI; exit/reduce exposure signal</td>
+        </tr>
+        
+        <tr>
+          <td>2026-09-08T14:45:00Z</td>
+          <td>XRPUSDT</td>
+          <td><strong>BUY</strong></td>
+          <td>0.75</td>
+          <td>1.41</td>
+          <td class="muted">price above EMA50 with EMA9 above EMA21; RSI acceptable; volume/MACD confirm</td>
+        </tr>
+        
+        <tr>
+          <td>2026-09-08T14:45:00Z</td>
+          <td>SOLUSDT</td>
+          <td><strong>SELL</strong></td>
+          <td>0.55</td>
+          <td>102.94</td>
+          <td class="muted">bearish trend or overheated RSI; exit/reduce exposure signal</td>
+        </tr>
+        
+        <tr>
+          <td>2026-09-08T14:45:00Z</td>
+          <td>ETHUSDT</td>
+          <td><strong>SELL</strong></td>
+          <td>0.55</td>
+          <td>2,471.02</td>
+          <td class="muted">bearish trend or overheated RSI; exit/reduce exposure signal</td>
+        </tr>
+        
+        <tr>
+          <td>2026-09-08T14:45:00Z</td>
+          <td>DOGEUSDT</td>
+          <td><strong>SELL</strong></td>
+          <td>0.55</td>
+          <td>0.09</td>
+          <td class="muted">bearish trend or overheated RSI; exit/reduce exposure signal</td>
+        </tr>
+        
+        <tr>
+          <td>2026-09-08T14:45:00Z</td>
+          <td>BTCUSDT</td>
+          <td><strong>SELL</strong></td>
+          <td>0.55</td>
+          <td>78,156.71</td>
+          <td class="muted">bearish trend or overheated RSI; exit/reduce exposure signal</td>
+        </tr>
+        
+        <tr>
+          <td>2026-09-08T14:30:00Z</td>
+          <td>XRPUSDT</td>
+          <td><strong>BUY</strong></td>
+          <td>0.75</td>
+          <td>1.41</td>
+          <td class="muted">price above EMA50 with EMA9 above EMA21; RSI acceptable; volume/MACD confirm</td>
+        </tr>
+        
+        <tr>
+          <td>2026-09-08T14:30:00Z</td>
+          <td>SOLUSDT</td>
+          <td><strong>SELL</strong></td>
+          <td>0.55</td>
+          <td>102.94</td>
+          <td class="muted">bearish trend or overheated RSI; exit/reduce exposure signal</td>
+        </tr>
+        
+        <tr>
+          <td>2026-09-08T14:30:00Z</td>
+          <td>ETHUSDT</td>
+          <td><strong>SELL</strong></td>
+          <td>0.55</td>
+          <td>2,471.02</td>
+          <td class="muted">bearish trend or overheated RSI; exit/reduce exposure signal</td>
+        </tr>
+        
+        <tr>
+          <td>2026-09-08T14:30:00Z</td>
+          <td>DOGEUSDT</td>
+          <td><strong>SELL</strong></td>
+          <td>0.55</td>
+          <td>0.09</td>
+          <td class="muted">bearish trend or overheated RSI; exit/reduce exposure signal</td>
+        </tr>
+        
+        <tr>
+          <td>2026-09-08T14:30:00Z</td>
+          <td>BTCUSDT</td>
+          <td><strong>SELL</strong></td>
+          <td>0.55</td>
+          <td>78,156.71</td>
+          <td class="muted">bearish trend or overheated RSI; exit/reduce exposure signal</td>
+        </tr>
+        
+        <tr>
+          <td>2026-09-08T14:15:00Z</td>
+          <td>XRPUSDT</td>
+          <td><strong>BUY</strong></td>
+          <td>0.75</td>
+          <td>1.41</td>
+          <td class="muted">price above EMA50 with EMA9 above EMA21; RSI acceptable; volume/MACD confirm</td>
+        </tr>
+        
+        <tr>
+          <td>2026-09-08T14:15:00Z</td>
+          <td>SOLUSDT</td>
+          <td><strong>SELL</strong></td>
+          <td>0.55</td>
+          <td>102.94</td>
+          <td class="muted">bearish trend or overheated RSI; exit/reduce exposure signal</td>
+        </tr>
+        
+        <tr>
+          <td>2026-09-08T14:15:00Z</td>
+          <td>ETHUSDT</td>
+          <td><strong>SELL</strong></td>
+          <td>0.55</td>
+          <td>2,471.02</td>
+          <td class="muted">bearish trend or overheated RSI; exit/reduce exposure signal</td>
+        </tr>
+        
+        <tr>
+          <td>2026-09-08T14:15:00Z</td>
+          <td>DOGEUSDT</td>
+          <td><strong>SELL</strong></td>
+          <td>0.55</td>
+          <td>0.09</td>
+          <td class="muted">bearish trend or overheated RSI; exit/reduce exposure signal</td>
+        </tr>
+        
+        <tr>
+          <td>2026-09-08T14:15:00Z</td>
+          <td>BTCUSDT</td>
+          <td><strong>SELL</strong></td>
+          <td>0.55</td>
+          <td>78,156.71</td>
+          <td class="muted">bearish trend or overheated RSI; exit/reduce exposure signal</td>
+        </tr>
+        
+        <tr>
           <td>2026-09-08T14:00:00Z</td>
           <td>XRPUSDT</td>
           <td><strong>HOLD</strong></td>
@@ -119,186 +306,6 @@ DOGEUSDT: mixed, 24h 0.12%, RSI 36.9, below_sma20, range_24h, rsi_neutral</pre>
           <td><strong>SELL</strong></td>
           <td>0.55</td>
           <td>78,500.01</td>
-          <td class="muted">bearish trend or overheated RSI; exit/reduce exposure signal</td>
-        </tr>
-        
-        <tr>
-          <td>2026-09-08T13:45:00Z</td>
-          <td>XRPUSDT</td>
-          <td><strong>HOLD</strong></td>
-          <td>0.25</td>
-          <td>1.40</td>
-          <td class="muted">no conservative setup confirmed</td>
-        </tr>
-        
-        <tr>
-          <td>2026-09-08T13:45:00Z</td>
-          <td>SOLUSDT</td>
-          <td><strong>SELL</strong></td>
-          <td>0.55</td>
-          <td>103.06</td>
-          <td class="muted">bearish trend or overheated RSI; exit/reduce exposure signal</td>
-        </tr>
-        
-        <tr>
-          <td>2026-09-08T13:45:00Z</td>
-          <td>ETHUSDT</td>
-          <td><strong>SELL</strong></td>
-          <td>0.55</td>
-          <td>2,473.56</td>
-          <td class="muted">bearish trend or overheated RSI; exit/reduce exposure signal</td>
-        </tr>
-        
-        <tr>
-          <td>2026-09-08T13:45:00Z</td>
-          <td>DOGEUSDT</td>
-          <td><strong>SELL</strong></td>
-          <td>0.55</td>
-          <td>0.09</td>
-          <td class="muted">bearish trend or overheated RSI; exit/reduce exposure signal</td>
-        </tr>
-        
-        <tr>
-          <td>2026-09-08T13:45:00Z</td>
-          <td>BTCUSDT</td>
-          <td><strong>SELL</strong></td>
-          <td>0.55</td>
-          <td>78,500.01</td>
-          <td class="muted">bearish trend or overheated RSI; exit/reduce exposure signal</td>
-        </tr>
-        
-        <tr>
-          <td>2026-09-08T13:30:00Z</td>
-          <td>XRPUSDT</td>
-          <td><strong>HOLD</strong></td>
-          <td>0.25</td>
-          <td>1.40</td>
-          <td class="muted">no conservative setup confirmed</td>
-        </tr>
-        
-        <tr>
-          <td>2026-09-08T13:30:00Z</td>
-          <td>SOLUSDT</td>
-          <td><strong>SELL</strong></td>
-          <td>0.55</td>
-          <td>103.06</td>
-          <td class="muted">bearish trend or overheated RSI; exit/reduce exposure signal</td>
-        </tr>
-        
-        <tr>
-          <td>2026-09-08T13:30:00Z</td>
-          <td>ETHUSDT</td>
-          <td><strong>SELL</strong></td>
-          <td>0.55</td>
-          <td>2,473.56</td>
-          <td class="muted">bearish trend or overheated RSI; exit/reduce exposure signal</td>
-        </tr>
-        
-        <tr>
-          <td>2026-09-08T13:30:00Z</td>
-          <td>DOGEUSDT</td>
-          <td><strong>SELL</strong></td>
-          <td>0.55</td>
-          <td>0.09</td>
-          <td class="muted">bearish trend or overheated RSI; exit/reduce exposure signal</td>
-        </tr>
-        
-        <tr>
-          <td>2026-09-08T13:30:00Z</td>
-          <td>BTCUSDT</td>
-          <td><strong>SELL</strong></td>
-          <td>0.55</td>
-          <td>78,500.01</td>
-          <td class="muted">bearish trend or overheated RSI; exit/reduce exposure signal</td>
-        </tr>
-        
-        <tr>
-          <td>2026-09-08T13:15:00Z</td>
-          <td>XRPUSDT</td>
-          <td><strong>HOLD</strong></td>
-          <td>0.25</td>
-          <td>1.40</td>
-          <td class="muted">no conservative setup confirmed</td>
-        </tr>
-        
-        <tr>
-          <td>2026-09-08T13:15:00Z</td>
-          <td>SOLUSDT</td>
-          <td><strong>SELL</strong></td>
-          <td>0.55</td>
-          <td>103.06</td>
-          <td class="muted">bearish trend or overheated RSI; exit/reduce exposure signal</td>
-        </tr>
-        
-        <tr>
-          <td>2026-09-08T13:15:00Z</td>
-          <td>ETHUSDT</td>
-          <td><strong>SELL</strong></td>
-          <td>0.55</td>
-          <td>2,473.56</td>
-          <td class="muted">bearish trend or overheated RSI; exit/reduce exposure signal</td>
-        </tr>
-        
-        <tr>
-          <td>2026-09-08T13:15:00Z</td>
-          <td>DOGEUSDT</td>
-          <td><strong>SELL</strong></td>
-          <td>0.55</td>
-          <td>0.09</td>
-          <td class="muted">bearish trend or overheated RSI; exit/reduce exposure signal</td>
-        </tr>
-        
-        <tr>
-          <td>2026-09-08T13:15:00Z</td>
-          <td>BTCUSDT</td>
-          <td><strong>SELL</strong></td>
-          <td>0.55</td>
-          <td>78,500.01</td>
-          <td class="muted">bearish trend or overheated RSI; exit/reduce exposure signal</td>
-        </tr>
-        
-        <tr>
-          <td>2026-09-08T13:00:00Z</td>
-          <td>XRPUSDT</td>
-          <td><strong>HOLD</strong></td>
-          <td>0.25</td>
-          <td>1.39</td>
-          <td class="muted">no conservative setup confirmed</td>
-        </tr>
-        
-        <tr>
-          <td>2026-09-08T13:00:00Z</td>
-          <td>SOLUSDT</td>
-          <td><strong>SELL</strong></td>
-          <td>0.55</td>
-          <td>102.77</td>
-          <td class="muted">bearish trend or overheated RSI; exit/reduce exposure signal</td>
-        </tr>
-        
-        <tr>
-          <td>2026-09-08T13:00:00Z</td>
-          <td>ETHUSDT</td>
-          <td><strong>SELL</strong></td>
-          <td>0.55</td>
-          <td>2,473.87</td>
-          <td class="muted">bearish trend or overheated RSI; exit/reduce exposure signal</td>
-        </tr>
-        
-        <tr>
-          <td>2026-09-08T13:00:00Z</td>
-          <td>DOGEUSDT</td>
-          <td><strong>SELL</strong></td>
-          <td>0.55</td>
-          <td>0.09</td>
-          <td class="muted">bearish trend or overheated RSI; exit/reduce exposure signal</td>
-        </tr>
-        
-        <tr>
-          <td>2026-09-08T13:00:00Z</td>
-          <td>BTCUSDT</td>
-          <td><strong>SELL</strong></td>
-          <td>0.55</td>
-          <td>78,361.08</td>
           <td class="muted">bearish trend or overheated RSI; exit/reduce exposure signal</td>
         </tr>
         </tbody>
@@ -310,6 +317,206 @@ DOGEUSDT: mixed, 24h 0.12%, RSI 36.9, below_sma20, range_24h, rsi_neutral</pre>
         <thead><tr><th>Time (UTC)</th><th>Symbol</th><th>Side</th><th>Status</th><th>Notional (USDT)</th><th>P&amp;L (USDT)</th><th>Reason</th></tr></thead>
         <tbody>
         <tr>
+          <td>2026-09-08T15:00:00Z</td>
+          <td>XRPUSDT</td>
+          <td>BUY</td>
+          <td>REJECTED</td>
+          <td>0.00</td>
+          <td>+0.00</td>
+          <td class="muted">paper position size limit reached</td>
+        </tr>
+        
+        <tr>
+          <td>2026-09-08T15:00:00Z</td>
+          <td>SOLUSDT</td>
+          <td>SELL</td>
+          <td>SKIPPED</td>
+          <td>0.00</td>
+          <td>+0.00</td>
+          <td class="muted">no open paper position</td>
+        </tr>
+        
+        <tr>
+          <td>2026-09-08T15:00:00Z</td>
+          <td>ETHUSDT</td>
+          <td>SELL</td>
+          <td>SKIPPED</td>
+          <td>0.00</td>
+          <td>+0.00</td>
+          <td class="muted">no open paper position</td>
+        </tr>
+        
+        <tr>
+          <td>2026-09-08T15:00:00Z</td>
+          <td>DOGEUSDT</td>
+          <td>SELL</td>
+          <td>SKIPPED</td>
+          <td>0.00</td>
+          <td>+0.00</td>
+          <td class="muted">no open paper position</td>
+        </tr>
+        
+        <tr>
+          <td>2026-09-08T15:00:00Z</td>
+          <td>BTCUSDT</td>
+          <td>SELL</td>
+          <td>SKIPPED</td>
+          <td>0.00</td>
+          <td>+0.00</td>
+          <td class="muted">no open paper position</td>
+        </tr>
+        
+        <tr>
+          <td>2026-09-08T14:45:00Z</td>
+          <td>XRPUSDT</td>
+          <td>BUY</td>
+          <td>REJECTED</td>
+          <td>0.00</td>
+          <td>+0.00</td>
+          <td class="muted">paper position size limit reached</td>
+        </tr>
+        
+        <tr>
+          <td>2026-09-08T14:45:00Z</td>
+          <td>SOLUSDT</td>
+          <td>SELL</td>
+          <td>SKIPPED</td>
+          <td>0.00</td>
+          <td>+0.00</td>
+          <td class="muted">no open paper position</td>
+        </tr>
+        
+        <tr>
+          <td>2026-09-08T14:45:00Z</td>
+          <td>ETHUSDT</td>
+          <td>SELL</td>
+          <td>SKIPPED</td>
+          <td>0.00</td>
+          <td>+0.00</td>
+          <td class="muted">no open paper position</td>
+        </tr>
+        
+        <tr>
+          <td>2026-09-08T14:45:00Z</td>
+          <td>DOGEUSDT</td>
+          <td>SELL</td>
+          <td>SKIPPED</td>
+          <td>0.00</td>
+          <td>+0.00</td>
+          <td class="muted">no open paper position</td>
+        </tr>
+        
+        <tr>
+          <td>2026-09-08T14:45:00Z</td>
+          <td>BTCUSDT</td>
+          <td>SELL</td>
+          <td>SKIPPED</td>
+          <td>0.00</td>
+          <td>+0.00</td>
+          <td class="muted">no open paper position</td>
+        </tr>
+        
+        <tr>
+          <td>2026-09-08T14:30:00Z</td>
+          <td>XRPUSDT</td>
+          <td>BUY</td>
+          <td>REJECTED</td>
+          <td>0.00</td>
+          <td>+0.00</td>
+          <td class="muted">paper position size limit reached</td>
+        </tr>
+        
+        <tr>
+          <td>2026-09-08T14:30:00Z</td>
+          <td>SOLUSDT</td>
+          <td>SELL</td>
+          <td>SKIPPED</td>
+          <td>0.00</td>
+          <td>+0.00</td>
+          <td class="muted">no open paper position</td>
+        </tr>
+        
+        <tr>
+          <td>2026-09-08T14:30:00Z</td>
+          <td>ETHUSDT</td>
+          <td>SELL</td>
+          <td>SKIPPED</td>
+          <td>0.00</td>
+          <td>+0.00</td>
+          <td class="muted">no open paper position</td>
+        </tr>
+        
+        <tr>
+          <td>2026-09-08T14:30:00Z</td>
+          <td>DOGEUSDT</td>
+          <td>SELL</td>
+          <td>SKIPPED</td>
+          <td>0.00</td>
+          <td>+0.00</td>
+          <td class="muted">no open paper position</td>
+        </tr>
+        
+        <tr>
+          <td>2026-09-08T14:30:00Z</td>
+          <td>BTCUSDT</td>
+          <td>SELL</td>
+          <td>SKIPPED</td>
+          <td>0.00</td>
+          <td>+0.00</td>
+          <td class="muted">no open paper position</td>
+        </tr>
+        
+        <tr>
+          <td>2026-09-08T14:15:00Z</td>
+          <td>XRPUSDT</td>
+          <td>BUY</td>
+          <td>FILLED</td>
+          <td>48.93</td>
+          <td>+0.00</td>
+          <td class="muted">paper buy executed</td>
+        </tr>
+        
+        <tr>
+          <td>2026-09-08T14:15:00Z</td>
+          <td>SOLUSDT</td>
+          <td>SELL</td>
+          <td>SKIPPED</td>
+          <td>0.00</td>
+          <td>+0.00</td>
+          <td class="muted">no open paper position</td>
+        </tr>
+        
+        <tr>
+          <td>2026-09-08T14:15:00Z</td>
+          <td>ETHUSDT</td>
+          <td>SELL</td>
+          <td>SKIPPED</td>
+          <td>0.00</td>
+          <td>+0.00</td>
+          <td class="muted">no open paper position</td>
+        </tr>
+        
+        <tr>
+          <td>2026-09-08T14:15:00Z</td>
+          <td>DOGEUSDT</td>
+          <td>SELL</td>
+          <td>SKIPPED</td>
+          <td>0.00</td>
+          <td>+0.00</td>
+          <td class="muted">no open paper position</td>
+        </tr>
+        
+        <tr>
+          <td>2026-09-08T14:15:00Z</td>
+          <td>BTCUSDT</td>
+          <td>SELL</td>
+          <td>SKIPPED</td>
+          <td>0.00</td>
+          <td>+0.00</td>
+          <td class="muted">no open paper position</td>
+        </tr>
+        
+        <tr>
           <td>2026-09-08T14:00:00Z</td>
           <td>SOLUSDT</td>
           <td>SELL</td>
@@ -351,206 +558,6 @@ DOGEUSDT: mixed, 24h 0.12%, RSI 36.9, below_sma20, range_24h, rsi_neutral</pre>
         
         <tr>
           <td>2026-09-08T13:45:00Z</td>
-          <td>SOLUSDT</td>
-          <td>SELL</td>
-          <td>SKIPPED</td>
-          <td>0.00</td>
-          <td>+0.00</td>
-          <td class="muted">no open paper position</td>
-        </tr>
-        
-        <tr>
-          <td>2026-09-08T13:45:00Z</td>
-          <td>ETHUSDT</td>
-          <td>SELL</td>
-          <td>SKIPPED</td>
-          <td>0.00</td>
-          <td>+0.00</td>
-          <td class="muted">no open paper position</td>
-        </tr>
-        
-        <tr>
-          <td>2026-09-08T13:45:00Z</td>
-          <td>DOGEUSDT</td>
-          <td>SELL</td>
-          <td>SKIPPED</td>
-          <td>0.00</td>
-          <td>+0.00</td>
-          <td class="muted">no open paper position</td>
-        </tr>
-        
-        <tr>
-          <td>2026-09-08T13:45:00Z</td>
-          <td>BTCUSDT</td>
-          <td>SELL</td>
-          <td>SKIPPED</td>
-          <td>0.00</td>
-          <td>+0.00</td>
-          <td class="muted">no open paper position</td>
-        </tr>
-        
-        <tr>
-          <td>2026-09-08T13:30:00Z</td>
-          <td>SOLUSDT</td>
-          <td>SELL</td>
-          <td>SKIPPED</td>
-          <td>0.00</td>
-          <td>+0.00</td>
-          <td class="muted">no open paper position</td>
-        </tr>
-        
-        <tr>
-          <td>2026-09-08T13:30:00Z</td>
-          <td>ETHUSDT</td>
-          <td>SELL</td>
-          <td>SKIPPED</td>
-          <td>0.00</td>
-          <td>+0.00</td>
-          <td class="muted">no open paper position</td>
-        </tr>
-        
-        <tr>
-          <td>2026-09-08T13:30:00Z</td>
-          <td>DOGEUSDT</td>
-          <td>SELL</td>
-          <td>SKIPPED</td>
-          <td>0.00</td>
-          <td>+0.00</td>
-          <td class="muted">no open paper position</td>
-        </tr>
-        
-        <tr>
-          <td>2026-09-08T13:30:00Z</td>
-          <td>BTCUSDT</td>
-          <td>SELL</td>
-          <td>SKIPPED</td>
-          <td>0.00</td>
-          <td>+0.00</td>
-          <td class="muted">no open paper position</td>
-        </tr>
-        
-        <tr>
-          <td>2026-09-08T13:15:00Z</td>
-          <td>SOLUSDT</td>
-          <td>SELL</td>
-          <td>SKIPPED</td>
-          <td>0.00</td>
-          <td>+0.00</td>
-          <td class="muted">no open paper position</td>
-        </tr>
-        
-        <tr>
-          <td>2026-09-08T13:15:00Z</td>
-          <td>ETHUSDT</td>
-          <td>SELL</td>
-          <td>SKIPPED</td>
-          <td>0.00</td>
-          <td>+0.00</td>
-          <td class="muted">no open paper position</td>
-        </tr>
-        
-        <tr>
-          <td>2026-09-08T13:15:00Z</td>
-          <td>DOGEUSDT</td>
-          <td>SELL</td>
-          <td>SKIPPED</td>
-          <td>0.00</td>
-          <td>+0.00</td>
-          <td class="muted">no open paper position</td>
-        </tr>
-        
-        <tr>
-          <td>2026-09-08T13:15:00Z</td>
-          <td>BTCUSDT</td>
-          <td>SELL</td>
-          <td>SKIPPED</td>
-          <td>0.00</td>
-          <td>+0.00</td>
-          <td class="muted">no open paper position</td>
-        </tr>
-        
-        <tr>
-          <td>2026-09-08T13:00:00Z</td>
-          <td>SOLUSDT</td>
-          <td>SELL</td>
-          <td>SKIPPED</td>
-          <td>0.00</td>
-          <td>+0.00</td>
-          <td class="muted">no open paper position</td>
-        </tr>
-        
-        <tr>
-          <td>2026-09-08T13:00:00Z</td>
-          <td>ETHUSDT</td>
-          <td>SELL</td>
-          <td>SKIPPED</td>
-          <td>0.00</td>
-          <td>+0.00</td>
-          <td class="muted">no open paper position</td>
-        </tr>
-        
-        <tr>
-          <td>2026-09-08T13:00:00Z</td>
-          <td>DOGEUSDT</td>
-          <td>SELL</td>
-          <td>SKIPPED</td>
-          <td>0.00</td>
-          <td>+0.00</td>
-          <td class="muted">no open paper position</td>
-        </tr>
-        
-        <tr>
-          <td>2026-09-08T13:00:00Z</td>
-          <td>BTCUSDT</td>
-          <td>SELL</td>
-          <td>SKIPPED</td>
-          <td>0.00</td>
-          <td>+0.00</td>
-          <td class="muted">no open paper position</td>
-        </tr>
-        
-        <tr>
-          <td>2026-09-08T12:45:00Z</td>
-          <td>SOLUSDT</td>
-          <td>SELL</td>
-          <td>SKIPPED</td>
-          <td>0.00</td>
-          <td>+0.00</td>
-          <td class="muted">no open paper position</td>
-        </tr>
-        
-        <tr>
-          <td>2026-09-08T12:45:00Z</td>
-          <td>ETHUSDT</td>
-          <td>SELL</td>
-          <td>SKIPPED</td>
-          <td>0.00</td>
-          <td>+0.00</td>
-          <td class="muted">no open paper position</td>
-        </tr>
-        
-        <tr>
-          <td>2026-09-08T12:45:00Z</td>
-          <td>DOGEUSDT</td>
-          <td>SELL</td>
-          <td>SKIPPED</td>
-          <td>0.00</td>
-          <td>+0.00</td>
-          <td class="muted">no open paper position</td>
-        </tr>
-        
-        <tr>
-          <td>2026-09-08T12:45:00Z</td>
-          <td>BTCUSDT</td>
-          <td>SELL</td>
-          <td>SKIPPED</td>
-          <td>0.00</td>
-          <td>+0.00</td>
-          <td class="muted">no open paper position</td>
-        </tr>
-        
-        <tr>
-          <td>2026-09-08T12:30:00Z</td>
           <td>SOLUSDT</td>
           <td>SELL</td>
           <td>SKIPPED</td>
@@ -569,55 +576,55 @@ DOGEUSDT: mixed, 24h 0.12%, RSI 36.9, below_sma20, range_24h, rsi_neutral</pre>
         <tr>
           <td>BTCUSDT</td>
           <td>mixed</td>
-          <td>77,981.42</td>
-          <td>0.03%</td>
-          <td>-0.52%</td>
-          <td>78,421.75</td>
-          <td>30.98</td>
-          <td>below_sma20, range_24h, rsi_neutral</td>
+          <td>78,561.62</td>
+          <td>-0.01%</td>
+          <td>0.09%</td>
+          <td>78,386.85</td>
+          <td>53.17</td>
+          <td>above_sma20, range_24h, rsi_neutral</td>
         </tr>
         
         <tr>
           <td>DOGEUSDT</td>
           <td>mixed</td>
           <td>0.09</td>
-          <td>0.15%</td>
-          <td>0.12%</td>
+          <td>-0.01%</td>
+          <td>0.31%</td>
           <td>0.09</td>
-          <td>36.94</td>
-          <td>below_sma20, range_24h, rsi_neutral</td>
+          <td>50.48</td>
+          <td>above_sma20, range_24h, rsi_neutral</td>
         </tr>
         
         <tr>
           <td>ETHUSDT</td>
           <td>mixed</td>
-          <td>2,460.63</td>
-          <td>0.06%</td>
-          <td>-0.49%</td>
-          <td>2,475.74</td>
-          <td>31.39</td>
-          <td>below_sma20, range_24h, rsi_neutral</td>
+          <td>2,485.79</td>
+          <td>0.00%</td>
+          <td>0.21%</td>
+          <td>2,475.06</td>
+          <td>57.39</td>
+          <td>above_sma20, range_24h, rsi_neutral</td>
         </tr>
         
         <tr>
           <td>SOLUSDT</td>
           <td>mixed</td>
-          <td>102.73</td>
-          <td>0.04%</td>
-          <td>0.05%</td>
-          <td>103.08</td>
-          <td>39.04</td>
-          <td>below_sma20, range_24h, rsi_neutral</td>
+          <td>103.35</td>
+          <td>0.02%</td>
+          <td>0.16%</td>
+          <td>103.01</td>
+          <td>55.85</td>
+          <td>above_sma20, range_24h, rsi_neutral</td>
         </tr>
         
         <tr>
           <td>XRPUSDT</td>
           <td>mixed</td>
-          <td>1.41</td>
-          <td>0.10%</td>
-          <td>1.41%</td>
+          <td>1.42</td>
+          <td>-0.03%</td>
+          <td>1.82%</td>
           <td>1.40</td>
-          <td>54.83</td>
+          <td>67.14</td>
           <td>above_sma20, range_24h, rsi_neutral</td>
         </tr>
         </tbody>
@@ -628,6 +635,27 @@ DOGEUSDT: mixed, 24h 0.12%, RSI 36.9, below_sma20, range_24h, rsi_neutral</pre>
       <table>
         <thead><tr><th>Source</th><th>Title</th><th>Matches</th><th>Published</th></tr></thead>
         <tbody>
+        <tr>
+          <td>CoinDesk</td>
+          <td><a href="https://www.coindesk.com/business/2026/09/08/circle-agrees-to-buy-cross-border-payments-firm-tazapay-for-usd400-million" target="_blank" rel="noopener noreferrer">Circle agrees to buy cross-border payments firm Tazapay for $400 million</a></td>
+          <td></td>
+          <td>2026-09-08T14:40:46Z</td>
+        </tr>
+        
+        <tr>
+          <td>CoinDesk</td>
+          <td><a href="https://www.coindesk.com/markets/2026/09/08/strive-s-sata-nears-usd1-billion-market-cap-as-strategy-s-strc-continues-to-underperform" target="_blank" rel="noopener noreferrer">Strive’s SATA nears $1 billion market cap as Strategy’s STRC continues to underperform</a></td>
+          <td></td>
+          <td>2026-09-08T14:33:32Z</td>
+        </tr>
+        
+        <tr>
+          <td>CoinDesk</td>
+          <td><a href="https://www.coindesk.com/business/2026/09/08/visa-opens-settlement-data-to-help-blockchain-lenders-finance-crypto-cards-as-volume-surges" target="_blank" rel="noopener noreferrer">Visa combines VisaNet data with onchain lending to power stablecoin card working capital</a></td>
+          <td></td>
+          <td>2026-09-08T14:29:14Z</td>
+        </tr>
+        
         <tr>
           <td>Decrypt</td>
           <td><a href="https://decrypt.co/377664/strategys-return-to-bitcoin-buying-lasted-exactly-one-week" target="_blank" rel="noopener noreferrer">Strategy&#x27;s Return to Bitcoin Buying Lasted Exactly One Week</a></td>
@@ -885,27 +913,6 @@ DOGEUSDT: mixed, 24h 0.12%, RSI 36.9, below_sma20, range_24h, rsi_neutral</pre>
           <td><a href="https://decrypt.co/377637/lg-tv-might-be-listening-even-when-off" target="_blank" rel="noopener noreferrer">Your LG TV Might Still Be Listening to You—Even When It Looks Like It’s Off</a></td>
           <td></td>
           <td>2026-09-07T21:46:04Z</td>
-        </tr>
-        
-        <tr>
-          <td>Decrypt</td>
-          <td><a href="https://decrypt.co/377635/openai-chief-scientist-warns-ai-slow-down" target="_blank" rel="noopener noreferrer">OpenAI Chief Scientist Warns AI Labs May Need to Slow Down</a></td>
-          <td></td>
-          <td>2026-09-07T21:16:03Z</td>
-        </tr>
-        
-        <tr>
-          <td>Cointelegraph</td>
-          <td><a href="https://cointelegraph.com/news/uk-financial-watchdog-prediction-markets-ban?utm_source=rss_feed&amp;utm_medium=rss&amp;utm_campaign=rss_partner_inbound" target="_blank" rel="noopener noreferrer">UK financial watchdog weighs lifting prediction markets ban: Report</a></td>
-          <td></td>
-          <td>2026-09-07T20:40:17Z</td>
-        </tr>
-        
-        <tr>
-          <td>Decrypt</td>
-          <td><a href="https://decrypt.co/377621/brazilian-banks-expand-crypto-offerings" target="_blank" rel="noopener noreferrer">Brazilian Banks Expand Crypto Offerings as Regulation Takes Hold</a></td>
-          <td></td>
-          <td>2026-09-07T20:31:03Z</td>
         </tr>
         </tbody>
       </table>
